@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pink Quantum | Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff007f;
+            --secondary: #ff85a2;
+            --glass: rgba(255, 255, 255, 0.07);
+            --border: rgba(255, 255, 255, 0.15);
+            --shadow: 0 0 20px rgba(255, 0, 127, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+        body { background: #080004; color: white; overflow-x: hidden; min-height: 100vh; display: flex; justify-content: center; }
+
+        /* تأثير القلوب الطائرة */
+        @keyframes hearts {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        .heart {
+            position: fixed; color: var(--primary); font-size: 20px;
+            animation: hearts 4s linear infinite; z-index: -1; bottom: -10%;
+        }
+
+        .bg-animate {
+            position: fixed; inset: 0; z-index: -2;
+            background: radial-gradient(circle at 10% 10%, #3d001f 0%, transparent 40%),
+                        radial-gradient(circle at 90% 90%, #200010 0%, transparent 40%);
+        }
+
+        .screen { display: none; width: 100%; max-width: 380px; padding: 20px; animation: fadeIn 0.8s ease forwards; }
+        .screen.active { display: flex; flex-direction: column; align-items: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+        .iphone-ui {
+            width: 100%; padding: 50px 20px; border-radius: 50px;
+            background: var(--glass); backdrop-filter: blur(25px);
+            border: 1px solid var(--border); box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            text-align: center; margin-top: 40px;
+        }
+        .lock-icon { font-size: 50px; color: var(--primary); text-shadow: var(--shadow); margin-bottom: 20px; }
+        .dot-input { display: flex; justify-content: center; gap: 12px; margin: 30px 0; }
+        .dot { width: 14px; height: 14px; border: 1.5px solid var(--secondary); border-radius: 50%; transition: 0.3s; }
+        .dot.fill { background: var(--primary); box-shadow: 0 0 15px var(--primary); transform: scale(1.2); border: none; }
+        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+        .key { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; 
+               background: rgba(255,255,255,0.03); border-radius: 50%; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
+        .key:active { background: var(--primary); border-color: var(--secondary); transform: scale(0.9); }
+
+        .q-card { background: var(--glass); padding: 25px; border-radius: 35px; border: 1px solid var(--border); text-align: center; width: 100%; position: relative; overflow: hidden; }
+        .q-img { width: 100%; border-radius: 20px; border: 2px solid var(--primary); box-shadow: var(--shadow); margin-bottom: 20px; transition: 0.5s; }
+        .btn-love { padding: 12px 35px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 18px; z-index: 10; }
+        #yesBtn { background: var(--primary); color: white; box-shadow: var(--shadow); position: relative; }
+        #noBtn { background: #333; color: white; position: relative; }
+
+        .header-box { text-align: center; margin: 25px 0; }
+        .header-title-small { font-size: 14px; font-weight: 300; color: white; opacity: 0.8; letter-spacing: 1px; }
+        .header-date { font-size: 32px; font-weight: 800; color: var(--secondary); text-shadow: var(--shadow); margin-top: -5px; }
+        
+        .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-bottom: 25px; }
+        .time-unit { background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02)); 
+                    padding: 15px 5px; border-radius: 20px; border: 1px solid var(--border); text-align: center; }
+        .time-unit span { display: block; font-size: 24px; font-weight: 800; color: var(--primary); }
+        .time-unit label { font-size: 11px; text-transform: uppercase; opacity: 0.7; }
+
+        .mini-slider { 
+            position: relative; width: 300px; height: 400px; 
+            border-radius: 30px; overflow: hidden; 
+            border: 2px solid var(--border); box-shadow: var(--shadow);
+            margin-bottom: 30px; background: #000;
+        }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s ease-in-out; object-fit: contain; width: 100%; height: 100%; }
+        .slide.active { opacity: 1; }
+        .slide-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 10px; z-index: 5; transform: translateY(-50%); }
+        .nav-circle { background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+        .vid-frame { width: 100%; border-radius: 25px; overflow: hidden; border: 1px solid var(--primary); margin-bottom: 30px; }
+        .reveal-btn { background: var(--primary); color: white; padding: 15px 45px; border-radius: 50px; border: none; font-size: 18px; font-weight: 700; cursor: pointer; box-shadow: var(--shadow); margin-bottom: 50px;}
+        
+        .letter-box { 
+            background: var(--glass); padding: 25px; border-radius: 25px; 
+            border-right: 6px solid var(--primary); line-height: 2; 
+            text-align: right; display: none; margin-bottom: 100px; 
+            backdrop-filter: blur(15px); border: 1px solid var(--border);
+            animation: slideUp 0.6s ease;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate" id="bg"></div>
+
+    <div class="screen active" id="s1">
+        <div class="iphone-ui">
+            <i class="fa-solid fa-fingerprint lock-icon"></i>
+            <h3 style="letter-spacing: 2px; opacity: 0.8;">✨♥️Ali & Amira ♥️✨</h3>
+            <div class="dot-input" id="dots">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <div class="numpad" id="numpad"></div>
+        </div>
+    </div>
+
+    <div class="screen" id="s2">
+        <div class="q-card">
+            <img id="qImg" src="https://i.top4top.io/p_3700jiwd01.jpg" class="q-img">
+            <h2 style="margin-bottom: 25px;">Do you love Ali?</h2>
+            <div id="btnContainer" style="display: flex; gap: 15px; justify-content: center; height: 200px; position: relative; width: 100%; align-items: center;">
+                <button id="yesBtn" class="btn-love" onclick="goMain()">Yes</button>
+                <button id="noBtn" class="btn-love" onmouseover="dodgeNo()" onclick="dodgeNo()">No</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="screen" id="s3" style="overflow-y: auto;">
+        <div class="header-box">
+            <div class="header-title-small">منذ بداية حكايتنا</div>
+            <div class="header-date">23 / 2 / 2025</div>
+        </div>
+        
+        <div class="counter-grid" id="countDisplay"></div>
+
+        <div class="mini-slider">
+            <div class="slide-nav">
+                <button class="nav-circle" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="nav-circle" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <img src="https://h.top4top.io/p_3700fy5zy1.jpg" class="slide active">
+            <img src="https://i.top4top.io/p_3700d2m3f1.jpg" class="slide">
+            <img src="https://j.top4top.io/p_37005ygt71.jpg" class="slide">
+            <img src="https://k.top4top.io/p_3700ug3af1.jpg" class="slide">
+            <img src="https://l.top4top.io/p_3700ztc7t1.jpg" class="slide">
+            <img src="https://a.top4top.io/p_37004ah5z1.jpg" class="slide">
+        </div>
+
+        <div class="vid-frame">
+            <video controls style="width: 100%; display: block;">
+                <source src="https://j.top4top.io/m_37001wweo1.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <button class="reveal-btn" onclick="showLetter()">دوسي هنا ❤️</button>
+        
+        <div class="letter-box" id="finalMsg">
+            <strong>Happy Anniversary♥️♥️</strong><br><br>
+            يا أجمل حاجة حصلتلي ♥️<br>
+            سنة معاكي كانت أحلى سنة في حياتي… <br>
+            ربنا يديمك لقلبي دايما ♥️<br>
+            بقالنا سنة كاملة مع بعض..<br>
+            سنة مليانة ضحك و كلام طويل و تفاصيل صغيرة كده بتعمل فرق كبير في قلبي... ♥️<br>
+            من أول ما دخلتي حياتي وأنا حاسس إن الدنيا بقت أجمل... ♥️<br>
+            شكراً إنك كنتي جنبي وإنك دايما بتخليني أحس إني محظوظ ♥️<br>
+            كل ضحكة و كل خناقة صغيرة واتصالحنا بعدها كل كلمة “وحشتني” كانت بتفرق معايا بجد...<br>
+            إنتي مش بس حبيبتي… إنتِ راحتي و وأماني و وأجمل صدفة حصلت في حياتي... ♥️<br>
+            يارب السنة اللي جاية تبقى أحلى ونفضل دايما ماسكين في بعض مهما حصل.. ♥️<br>
+            بحبك… وكل سنة وإحنا بنكبر سوا وبنحب بعض أكتر... ♥️♥️♥️
+        </div>
+    </div>
+
+    <script>
+        const PIN = "2322025";
+        let typed = "";
+        let noC = 0;
+
+        function createHeart() {
+            const h = document.createElement('i');
+            h.className = 'fa-solid fa-heart heart';
+            h.style.left = Math.random() * 100 + "vw";
+            h.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }
+        setInterval(createHeart, 400);
+
+        const np = document.getElementById('numpad');
+        ['1','2','3','4','5','6','7','8','9','*','0','#'].forEach(k => {
+            const d = document.createElement('div');
+            d.className = 'key'; d.innerText = k;
+            d.onclick = () => {
+                if(typed.length < 7 && !isNaN(k)) {
+                    typed += k;
+                    updateDots();
+                    if(typed.length === 7) {
+                        if(typed === PIN) { 
+                            show('s2'); 
+                        }
+                        else { 
+                            alert("شكلك نسيتيه ولا اي 🧐"); 
+                            typed = ""; 
+                            updateDots(); 
+                        }
+                    }
+                }
+            };
+            np.appendChild(d);
+        });
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('fill', i < typed.length));
+        }
+
+        function show(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function dodgeNo() {
+            noC++;
+            const n = document.getElementById('noBtn');
+            const y = document.getElementById('yesBtn');
+            const img = document.getElementById('qImg');
+            
+            img.src = "https://h.top4top.io/p_3700oy22w1.jpg";
+            
+            if(noC <= 3) {
+                n.style.position = 'absolute';
+                n.style.left = Math.random() * 60 + '%';
+                n.style.top = Math.random() * 60 + '%';
+                n.style.transform = `scale(${1 - noC*0.25})`;
+                y.style.transform = `scale(${1 + noC*0.5})`;
+            } else {
+                n.style.display = 'none';
+                y.style.transform = `scale(1.5)`;
+                y.style.width = "100%";
+            }
+        }
+
+        function goMain() {
+            show('s3');
+            setInterval(updateTimer, 1000);
+            updateTimer();
+        }
+
+        function showLetter() {
+            const msg = document.getElementById('finalMsg');
+            msg.style.display = 'block';
+            msg.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateTimer() {
+            const start = new Date('2025-02-23T13:00:00');
+            const now = new Date();
+            const diff = now - start;
+            const units = {
+                'سنة': Math.floor(diff / 31536000000),
+                'شهر': Math.floor((diff % 31536000000) / 2592000000),
+                'يوم': Math.floor((diff % 2592000000) / 86400000),
+                'ساعة': Math.floor((diff % 86400000) / 3600000),
+                'دقيقة': Math.floor((diff % 3600000) / 60000),
+                'ثانية': Math.floor((diff % 60000) / 1000)
+            };
+            document.getElementById('countDisplay').innerHTML = Object.entries(units).map(([l, v]) => `
+                <div class="time-unit"><span>${v}</span><label>${l}</label></div>
+            `).join('');
+        }
+
+        let sIdx = 0;
+        const slides = document.querySelectorAll('.slide');
+        function moveSlide(n) {
+            slides[sIdx].classList.remove('active');
+            sIdx = (sIdx + n + slides.length) % slides.length;
+            slides[sIdx].classList.add('active');
+        }
+    </script>
+</body>
+</html>
