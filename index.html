@@ -18,6 +18,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body { background: #080004; color: white; overflow-x: hidden; min-height: 100vh; display: flex; justify-content: center; }
 
+        /* تأثير القلوب الطائرة */
         @keyframes hearts {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
             50% { opacity: 0.8; }
@@ -54,10 +55,10 @@
         .key:active { background: var(--primary); border-color: var(--secondary); transform: scale(0.9); }
 
         .q-card { background: var(--glass); padding: 25px; border-radius: 35px; border: 1px solid var(--border); text-align: center; width: 100%; position: relative; overflow: hidden; }
-        .q-img { width: 100%; border-radius: 20px; border: 2px solid var(--primary); box-shadow: var(--shadow); margin-bottom: 20px; }
+        .q-img { width: 100%; border-radius: 20px; border: 2px solid var(--primary); box-shadow: var(--shadow); margin-bottom: 20px; transition: 0.5s; }
         .btn-love { padding: 12px 35px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 18px; z-index: 10; }
-        #yesBtn { background: var(--primary); color: white; box-shadow: var(--shadow); }
-        #noBtn { background: #333; color: white; }
+        #yesBtn { background: var(--primary); color: white; box-shadow: var(--shadow); position: relative; }
+        #noBtn { background: #333; color: white; position: relative; }
 
         .header-box { text-align: center; margin: 25px 0; }
         .header-title-small { font-size: 14px; font-weight: 300; color: white; opacity: 0.8; letter-spacing: 1px; }
@@ -75,7 +76,7 @@
             border: 2px solid var(--border); box-shadow: var(--shadow);
             margin-bottom: 30px; background: #000;
         }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s ease-in-out; object-fit: cover; width: 100%; height: 100%; }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s ease-in-out; object-fit: contain; width: 100%; height: 100%; }
         .slide.active { opacity: 1; }
         .slide-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 10px; z-index: 5; transform: translateY(-50%); }
         .nav-circle { background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -184,15 +185,11 @@
             const d = document.createElement('div');
             d.className = 'key'; d.innerText = k;
             d.onclick = () => {
-                if(k === 'C') {
-                    typed = "";
-                } else if(typed.length < 4) {
-                    typed += k;
-                }
+                if(k === 'C') { typed = ""; }
+                else if(typed.length < 4) { typed += k; }
                 updateDots();
-                if(typed === PIN) { 
-                    setTimeout(() => show('s2'), 300);
-                } else if(typed.length === 4 && typed !== PIN) {
+                if(typed === PIN) { setTimeout(() => show('s2'), 300); }
+                else if(typed.length === 4 && typed !== PIN) {
                     alert("شكلك نسيتيه ولا اي 🧐");
                     typed = "";
                     updateDots();
@@ -242,41 +239,26 @@
         }
 
         function updateTimer() {
-            // تاريخ البداية: 23 فبراير 2025 الساعة 12:00 ص
             const start = new Date('2025-02-23T00:00:00');
             const now = new Date();
             const diff = now - start;
 
-            // حساب السنة
-            const oneYear = 1000 * 60 * 60 * 24 * 365;
+            const oneYear = 1000 * 60 * 60 * 24 * 365.25;
             const years = Math.floor(diff / oneYear);
-            
-            // حساب الفرق المتبقي بعد السنوات
             let remainder = diff % oneYear;
 
-            // حساب الشهور (باعتبار الشهر 30.44 يوم كمتوسط)
             const oneMonth = 1000 * 60 * 60 * 24 * 30.44;
             const months = Math.floor(remainder / oneMonth);
             remainder %= oneMonth;
 
-            // حساب الأيام
             const days = Math.floor(remainder / (1000 * 60 * 60 * 24));
             remainder %= (1000 * 60 * 60 * 24);
 
-            // الساعات والدقائق والثواني
             const hours = Math.floor(remainder / (1000 * 60 * 60));
             const mins = Math.floor((remainder % (1000 * 60 * 60)) / (1000 * 60));
             const secs = Math.floor((remainder % (1000 * 60)) / 1000);
 
-            const units = {
-                'سنة': years,
-                'شهر': months,
-                'يوم': days,
-                'ساعة': hours,
-                'دقيقة': mins,
-                'ثانية': secs
-            };
-
+            const units = { 'سنة': years, 'شهر': months, 'يوم': days, 'ساعة': hours, 'دقيقة': mins, 'ثانية': secs };
             document.getElementById('countDisplay').innerHTML = Object.entries(units).map(([l, v]) => `
                 <div class="time-unit"><span>${v}</span><label>${l}</label></div>
             `).join('');
