@@ -18,7 +18,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body { background: #080004; color: white; overflow-x: hidden; min-height: 100vh; display: flex; justify-content: center; }
 
-        /* تأثير القلوب الطائرة */
         @keyframes hearts {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
             50% { opacity: 0.8; }
@@ -46,19 +45,19 @@
             text-align: center; margin-top: 40px;
         }
         .lock-icon { font-size: 50px; color: var(--primary); text-shadow: var(--shadow); margin-bottom: 20px; }
-        .dot-input { display: flex; justify-content: center; gap: 12px; margin: 30px 0; }
+        .dot-input { display: flex; justify-content: center; gap: 12px; margin: 30px 0; direction: ltr; }
         .dot { width: 14px; height: 14px; border: 1.5px solid var(--secondary); border-radius: 50%; transition: 0.3s; }
         .dot.fill { background: var(--primary); box-shadow: 0 0 15px var(--primary); transform: scale(1.2); border: none; }
-        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; }
+        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; direction: ltr; }
         .key { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 22px; 
                background: rgba(255,255,255,0.03); border-radius: 50%; cursor: pointer; transition: 0.2s; border: 1px solid transparent; }
         .key:active { background: var(--primary); border-color: var(--secondary); transform: scale(0.9); }
 
         .q-card { background: var(--glass); padding: 25px; border-radius: 35px; border: 1px solid var(--border); text-align: center; width: 100%; position: relative; overflow: hidden; }
-        .q-img { width: 100%; border-radius: 20px; border: 2px solid var(--primary); box-shadow: var(--shadow); margin-bottom: 20px; transition: 0.5s; }
+        .q-img { width: 100%; border-radius: 20px; border: 2px solid var(--primary); box-shadow: var(--shadow); margin-bottom: 20px; }
         .btn-love { padding: 12px 35px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 18px; z-index: 10; }
-        #yesBtn { background: var(--primary); color: white; box-shadow: var(--shadow); position: relative; }
-        #noBtn { background: #333; color: white; position: relative; }
+        #yesBtn { background: var(--primary); color: white; box-shadow: var(--shadow); }
+        #noBtn { background: #333; color: white; }
 
         .header-box { text-align: center; margin: 25px 0; }
         .header-title-small { font-size: 14px; font-weight: 300; color: white; opacity: 0.8; letter-spacing: 1px; }
@@ -76,7 +75,7 @@
             border: 2px solid var(--border); box-shadow: var(--shadow);
             margin-bottom: 30px; background: #000;
         }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s ease-in-out; object-fit: contain; width: 100%; height: 100%; }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: 0.8s ease-in-out; object-fit: cover; width: 100%; height: 100%; }
         .slide.active { opacity: 1; }
         .slide-nav { position: absolute; top: 50%; width: 100%; display: flex; justify-content: space-between; padding: 0 10px; z-index: 5; transform: translateY(-50%); }
         .nav-circle { background: rgba(0,0,0,0.6); border: 1px solid var(--border); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
@@ -103,9 +102,7 @@
             <i class="fa-solid fa-fingerprint lock-icon"></i>
             <h3 style="letter-spacing: 2px; opacity: 0.8;">✨♥️Ali & Amira ♥️✨</h3>
             <div class="dot-input" id="dots">
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-                <div class="dot"></div>
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
             </div>
             <div class="numpad" id="numpad"></div>
         </div>
@@ -135,12 +132,12 @@
                 <button class="nav-circle" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                 <button class="nav-circle" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
-            <img src="https://h.top4top.io/p_3700fy5zy1.jpg" class="slide active">
-            <img src="https://i.top4top.io/p_3700d2m3f1.jpg" class="slide">
-            <img src="https://j.top4top.io/p_37005ygt71.jpg" class="slide">
-            <img src="https://k.top4top.io/p_3700ug3af1.jpg" class="slide">
-            <img src="https://l.top4top.io/p_3700ztc7t1.jpg" class="slide">
-            <img src="https://a.top4top.io/p_37004ah5z1.jpg" class="slide">
+            <img src="https://d.top4top.io/p_37046j7451.jpg" class="slide active">
+            <img src="https://f.top4top.io/p_3704ic1f71.jpg" class="slide">
+            <img src="https://a.top4top.io/p_3704h0q1m1.jpg" class="slide">
+            <img src="https://c.top4top.io/p_3704l3h3e1.jpg" class="slide">
+            <img src="https://e.top4top.io/p_370459pq21.jpg" class="slide">
+            <img src="https://b.top4top.io/p_3704gub4g1.jpg" class="slide">
         </div>
 
         <div class="vid-frame">
@@ -168,7 +165,7 @@
     </div>
 
     <script>
-        const PIN = "2322025";
+        const PIN = "23/2";
         let typed = "";
         let noC = 0;
 
@@ -183,23 +180,22 @@
         setInterval(createHeart, 400);
 
         const np = document.getElementById('numpad');
-        ['1','2','3','4','5','6','7','8','9','*','0','#'].forEach(k => {
+        ['1','2','3','4','5','6','7','8','9','/','0','C'].forEach(k => {
             const d = document.createElement('div');
             d.className = 'key'; d.innerText = k;
             d.onclick = () => {
-                if(typed.length < 7 && !isNaN(k)) {
+                if(k === 'C') {
+                    typed = "";
+                } else if(typed.length < 4) {
                     typed += k;
+                }
+                updateDots();
+                if(typed === PIN) { 
+                    setTimeout(() => show('s2'), 300);
+                } else if(typed.length === 4 && typed !== PIN) {
+                    alert("شكلك نسيتيه ولا اي 🧐");
+                    typed = "";
                     updateDots();
-                    if(typed.length === 7) {
-                        if(typed === PIN) { 
-                            show('s2'); 
-                        }
-                        else { 
-                            alert("شكلك نسيتيه ولا اي 🧐"); 
-                            typed = ""; 
-                            updateDots(); 
-                        }
-                    }
                 }
             };
             np.appendChild(d);
@@ -219,9 +215,7 @@
             const n = document.getElementById('noBtn');
             const y = document.getElementById('yesBtn');
             const img = document.getElementById('qImg');
-            
             img.src = "https://h.top4top.io/p_3700oy22w1.jpg";
-            
             if(noC <= 3) {
                 n.style.position = 'absolute';
                 n.style.left = Math.random() * 60 + '%';
@@ -248,17 +242,41 @@
         }
 
         function updateTimer() {
-            const start = new Date('2025-02-23T13:00:00');
+            // تاريخ البداية: 23 فبراير 2025 الساعة 12:00 ص
+            const start = new Date('2025-02-23T00:00:00');
             const now = new Date();
             const diff = now - start;
+
+            // حساب السنة
+            const oneYear = 1000 * 60 * 60 * 24 * 365;
+            const years = Math.floor(diff / oneYear);
+            
+            // حساب الفرق المتبقي بعد السنوات
+            let remainder = diff % oneYear;
+
+            // حساب الشهور (باعتبار الشهر 30.44 يوم كمتوسط)
+            const oneMonth = 1000 * 60 * 60 * 24 * 30.44;
+            const months = Math.floor(remainder / oneMonth);
+            remainder %= oneMonth;
+
+            // حساب الأيام
+            const days = Math.floor(remainder / (1000 * 60 * 60 * 24));
+            remainder %= (1000 * 60 * 60 * 24);
+
+            // الساعات والدقائق والثواني
+            const hours = Math.floor(remainder / (1000 * 60 * 60));
+            const mins = Math.floor((remainder % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((remainder % (1000 * 60)) / 1000);
+
             const units = {
-                'سنة': Math.floor(diff / 31536000000),
-                'شهر': Math.floor((diff % 31536000000) / 2592000000),
-                'يوم': Math.floor((diff % 2592000000) / 86400000),
-                'ساعة': Math.floor((diff % 86400000) / 3600000),
-                'دقيقة': Math.floor((diff % 3600000) / 60000),
-                'ثانية': Math.floor((diff % 60000) / 1000)
+                'سنة': years,
+                'شهر': months,
+                'يوم': days,
+                'ساعة': hours,
+                'دقيقة': mins,
+                'ثانية': secs
             };
+
             document.getElementById('countDisplay').innerHTML = Object.entries(units).map(([l, v]) => `
                 <div class="time-unit"><span>${v}</span><label>${l}</label></div>
             `).join('');
